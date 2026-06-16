@@ -1,0 +1,74 @@
+// SPDX-License-Identifier: MPL-2.0
+// Copyright (c) 2026 Jonathan D.A. Jewell (hyperpolymath) <j.d.a.jewell@open.ac.uk>
+= Weft — Seed Questions
+:doctype: book
+:revdate: 2026-06-16
+:toc: macro
+:toclevels: 2
+:sectnums:
+
+[abstract]
+weft is the least-settled layer of the cleave/groove/weft trio and the spot where
+`protocol-squisher` originally planned to operate and stalled. This document is the
+seed: scope, non-goals, the squisher caution, and the open questions to resolve
+*before* any implementation. There is deliberately NO lifted code here.
+
+toc::[]
+
+== Why this is seed-only
+
+The recommendation was to defer the data-form *inside groove* (least-settled,
+squisher-adjacent). The owner chose to spin it off as its own repo now. To honour both
+— the decision and the caution — weft exists as a repo but stays thin until the
+questions below are answered. Revert cost is therefore low (delete a local dir, or fold
+the docs back into groove).
+
+== Scope (what weft IS)
+
+* The *serialise* + *parallelise* data-form: the bytes Groove carries.
+* A thin *alignment* over existing transports, NOT a new serialiser:
+  - control plane = Bebop (typed, binary, reliable/ordered)
+  - media plane = WebRTC/RTP (lossy, low-latency)
+* A *typed boundary* for groove capability tokens + handles (vs bare scalars / opaque
+  JSON).
+
+== Non-goals (what weft IS-NOT)
+
+* IS-NOT the interface engine (that is `cleave`).
+* IS-NOT the protocol / negotiation (that is `groove`).
+* IS-NOT a new wire format invented from scratch (that is the squisher trap).
+* IS-NOT posture-aware: by B perp C, weft stays blind to the cleave membrane's
+  lifecycle/security witness. The rank/lifecycle witness MUST NOT appear in the byte
+  encoding.
+
+== The squisher caution (load-bearing)
+
+`protocol-squisher` is a *frozen provenance archive*; its v1.x universal-interop claim
+was closed by `hub_ceiling` (transport composition = max/bottleneck). weft must:
+
+. NOT lift code from `protocol-squisher` / `squisher-corpus`.
+. NOT recreate the design-source -> copy/sync seam (cleave is a *library groove depends
+  on*, not a thing copied from; the same discipline applies to weft vs its consumers).
+. Treat the squisher archive as *evidence of what stalled*, not a foundation.
+
+== Open questions (resolve before implementing)
+
+. **Name.** Is `weft` right, or should this fold back into `groove` as a module? (Cheap
+  to change now — local-only.)
+. **"Parallelise" — what does it mean here?** The name says serialise *and* parallelise.
+  Is "parallelise" about (a) multiplexing independent streams over one connection, (b)
+  fan-out/scatter of one logical message, (c) parallel (de)serialisation for throughput,
+  or (d) something else? This is undefined and must be pinned.
+. **Bebop binding.** How is the Bebop schema authored/owned — in weft, or referenced from
+  the consumer (burble) that already has it? (Avoid duplicating burble's schema; avoid
+  editing burble — son-shared AGPL.)
+. **Typed tokens.** What exactly is the typed boundary for groove cap tokens + handles,
+  and how does it relate to cleave's linear-handle newtype (PROOF-NEEDS G-3) and manifest
+  signing (G-5)?
+. **Promotion criteria.** What has to be true for weft to be considered "stable"? Until
+  then it stays seed/thin.
+
+== Status
+
+Seed. No implementation. Captured 2026-06-16 so the decision (spin-off now, kept thin)
+and the caution are explicit and not lost across compaction.

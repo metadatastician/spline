@@ -1,0 +1,52 @@
+# SPDX-License-Identifier: MPL-2.0
+# Copyright (c) 2026 Jonathan D.A. Jewell (hyperpolymath) <j.d.a.jewell@open.ac.uk>
+#
+# STATE.a2ml — Project state checkpoint
+
+[metadata]
+project = "weft"
+version = "0.1.0"
+last-updated = "2026-06-16"
+status = "active"
+
+[project-context]
+name = "weft"
+purpose = "The serialise + parallelise data-form wire layer for Groove; a thin alignment over Bebop (control) + WebRTC (media), NOT a new serialiser."
+completion-percentage = 3
+
+[position]
+phase = "design"
+maturity = "experimental"
+
+[route-to-mvp]
+milestones = [
+  { name = "Phase 0: Scaffold + SEED-QUESTIONS (scope, non-goals, squisher caution)", completion = 60 },
+  { name = "Phase 1: Pin the alignment — Bebop control-plane schema + WebRTC media-plane framing (NO new wire format)", completion = 0 },
+  { name = "Phase 2: Typed boundary for groove cap tokens + handles (close cleave PROOF-NEEDS G-5)", completion = 0 },
+  { name = "Phase 3: Parallelise path (the second half of the name) — define what 'parallelise' means here", completion = 0 },
+]
+
+[blockers-and-issues]
+# OWNER NOTE: weft was spun off as its own repo at owner direction (2026-06-16), overriding
+# the recommendation to defer it inside groove. It is the least-settled layer and the spot
+# protocol-squisher stalled. Kept deliberately thin (spec/seed only, NO lifted code) to keep
+# revert-cost low. See SEED-QUESTIONS.
+
+[critical-next-actions]
+actions = [
+  "Owner review of scaffold + SEED-QUESTIONS (this checkpoint)",
+  "Decide: is 'weft' the right name, or fold back into groove as a module? (Either is cheap now — local-only.)",
+  "Confirm Bebop + WebRTC as the alignment targets (per 2026-06-15 gossamer audit: burble already speaks both)",
+  "Confirm clade prefix via gv-clade-index (CLADE.prefixed-name is PROVISIONAL)",
+]
+
+[maintenance-status]
+last-run-utc = "never"
+last-report = "docs/reports/maintenance/latest.json"
+last-result = "unknown"
+open-warnings = 0
+open-failures = 0
+
+[ecosystem]
+part-of = ["RSR Framework", "cleave/groove/weft surface trio"]
+depends-on = []
