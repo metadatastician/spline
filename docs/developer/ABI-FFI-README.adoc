@@ -3,7 +3,7 @@
 = ABI/FFI Standards
 {{~ Aditionally delete this line and fill out the template below ~}}
 
-# WEFT ABI/FFI Documentation
+# SPLINE ABI/FFI Documentation
 
 ## Overview
 
@@ -29,7 +29,7 @@ This library follows the **Hyperpolymath RSR Standard** for ABI and FFI design:
                   ▼
 ┌─────────────────────────────────────────────┐
 │  C Headers (auto-generated)                 │
-│  generated/abi/weft.h                │
+│  generated/abi/spline.h                │
 └─────────────────┬───────────────────────────┘
                   │
                   │ imported by
@@ -42,7 +42,7 @@ This library follows the **Hyperpolymath RSR Standard** for ABI and FFI design:
 │  - Memory-safe by default                   │
 └─────────────────┬───────────────────────────┘
                   │
-                  │ compiled to libweft.so/.a
+                  │ compiled to libspline.so/.a
                   ▼
 ┌─────────────────────────────────────────────┐
 │  Any Language via C ABI                     │
@@ -53,7 +53,7 @@ This library follows the **Hyperpolymath RSR Standard** for ABI and FFI design:
 ## Directory Structure
 
 ```
-weft/
+spline/
 ├── src/
 │   ├── abi/                    # ABI definitions (Idris2)
 │   │   ├── Types.idr           # Core type definitions with proofs
@@ -70,11 +70,11 @@ weft/
 │       ├── test/
 │       │   └── integration_test.zig
 │       └── include/
-│           └── weft.h   # C header (optional, can be generated)
+│           └── spline.h   # C header (optional, can be generated)
 │
 ├── generated/                  # Auto-generated files
 │   └── abi/
-│       └── weft.h       # Generated from Idris2 ABI
+│       └── spline.h       # Generated from Idris2 ABI
 │
 └── bindings/                   # Language-specific wrappers (optional)
     ├── rust/
@@ -202,7 +202,7 @@ zig build test                    # Run tests
 
 ```bash
 cd src/abi
-idris2 --cg c-header Types.idr -o ../../generated/abi/weft.h
+idris2 --cg c-header Types.idr -o ../../generated/abi/spline.h
 ```
 
 ### Cross-Compile
@@ -225,32 +225,32 @@ zig build -Dtarget=x86_64-windows
 ### From C
 
 ```c
-#include "weft.h"
+#include "spline.h"
 
 int main() {
-    void* handle = weft_init();
+    void* handle = spline_init();
     if (!handle) return 1;
 
-    int result = weft_process(handle, 42);
+    int result = spline_process(handle, 42);
     if (result != 0) {
-        const char* err = weft_last_error();
+        const char* err = spline_last_error();
         fprintf(stderr, "Error: %s\n", err);
     }
 
-    weft_free(handle);
+    spline_free(handle);
     return 0;
 }
 ```
 
 Compile with:
 ```bash
-gcc -o example example.c -lweft -L./zig-out/lib
+gcc -o example example.c -lspline -L./zig-out/lib
 ```
 
 ### From Idris2
 
 ```idris
-import WEFT.ABI.Foreign
+import SPLINE.ABI.Foreign
 
 main : IO ()
 main = do
@@ -267,22 +267,22 @@ main = do
 ### From Rust
 
 ```rust
-#[link(name = "weft")]
+#[link(name = "spline")]
 extern "C" {
-    fn weft_init() -> *mut std::ffi::c_void;
-    fn weft_free(handle: *mut std::ffi::c_void);
-    fn weft_process(handle: *mut std::ffi::c_void, input: u32) -> i32;
+    fn spline_init() -> *mut std::ffi::c_void;
+    fn spline_free(handle: *mut std::ffi::c_void);
+    fn spline_process(handle: *mut std::ffi::c_void, input: u32) -> i32;
 }
 
 fn main() {
     unsafe {
-        let handle = weft_init();
+        let handle = spline_init();
         assert!(!handle.is_null());
 
-        let result = weft_process(handle, 42);
+        let result = spline_process(handle, 42);
         assert_eq!(result, 0);
 
-        weft_free(handle);
+        spline_free(handle);
     }
 }
 ```
@@ -290,21 +290,21 @@ fn main() {
 ### From Julia
 
 ```julia
-const libweft = "libweft"
+const libspline = "libspline"
 
 function init()
-    handle = ccall((:weft_init, libweft), Ptr{Cvoid}, ())
+    handle = ccall((:spline_init, libspline), Ptr{Cvoid}, ())
     handle == C_NULL && error("Failed to initialize")
     handle
 end
 
 function process(handle, input)
-    result = ccall((:weft_process, libweft), Cint, (Ptr{Cvoid}, UInt32), handle, input)
+    result = ccall((:spline_process, libspline), Cint, (Ptr{Cvoid}, UInt32), handle, input)
     result
 end
 
 function cleanup(handle)
-    ccall((:weft_free, libweft), Cvoid, (Ptr{Cvoid},), handle)
+    ccall((:spline_free, libspline), Cvoid, (Ptr{Cvoid},), handle)
 end
 
 # Usage
@@ -358,7 +358,7 @@ When modifying the ABI/FFI:
 
 2. **Generate C header**
    ```bash
-   idris2 --cg c-header src/abi/Types.idr -o generated/abi/weft.h
+   idris2 --cg c-header src/abi/Types.idr -o generated/abi/spline.h
    ```
 
 3. **Update FFI implementation** (`ffi/zig/src/main.zig`)

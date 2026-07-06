@@ -8,7 +8,7 @@
 
 set -euo pipefail
 
-BINARY_NAME="weft"
+BINARY_NAME="spline"
 REPORT_PATH="docs/reports/security/assault-latest.json"
 PA_BIN="${PANIC_ATTACK_BIN:-panic-attack}"
 

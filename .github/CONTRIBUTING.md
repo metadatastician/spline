@@ -3,15 +3,15 @@ SPDX-License-Identifier: MPL-2.0
 Copyright (c) Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
 -->
 # Clone the repository
-git clone https://github.com/hyperpolymath/weft.git
-cd weft
+git clone https://github.com/hyperpolymath/spline.git
+cd spline
 
 # Using Nix (recommended for reproducibility)
 nix develop
 
 # Or using toolbox/distrobox
-toolbox create weft-dev
-toolbox enter weft-dev
+toolbox create spline-dev
+toolbox enter spline-dev
 # Install dependencies manually
 
 # Verify setup
@@ -21,7 +21,7 @@ just test    # Run test suite
 
 ### Repository Structure
 ```
-weft/
+spline/
 ├── src/                 # Source code (Perimeter 1-2)
 ├── lib/                 # Library code (Perimeter 1-2)
 ├── extensions/          # Extensions (Perimeter 2)
@@ -95,10 +95,10 @@ Use the [feature request template](.github/ISSUE_TEMPLATE/feature_request.md) an
 
 Look for issues labelled:
 
-- [`good first issue`](https://github.com/hyperpolymath/weft/labels/good%20first%20issue) — Simple Perimeter 3 tasks
-- [`help wanted`](https://github.com/hyperpolymath/weft/labels/help%20wanted) — Community help needed
-- [`documentation`](https://github.com/hyperpolymath/weft/labels/documentation) — Docs improvements
-- [`perimeter-3`](https://github.com/hyperpolymath/weft/labels/perimeter-3) — Community sandbox scope
+- [`good first issue`](https://github.com/hyperpolymath/spline/labels/good%20first%20issue) — Simple Perimeter 3 tasks
+- [`help wanted`](https://github.com/hyperpolymath/spline/labels/help%20wanted) — Community help needed
+- [`documentation`](https://github.com/hyperpolymath/spline/labels/documentation) — Docs improvements
+- [`perimeter-3`](https://github.com/hyperpolymath/spline/labels/perimeter-3) — Community sandbox scope
 
 ---
 

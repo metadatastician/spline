@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright (c) Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
 // SPDX-FileCopyrightText: 2026 Jonathan D.A. Jewell (hyperpolymath) <j.d.a.jewell@open.ac.uk>
-= Usage — Weft
+= Usage — Spline
 :revdate: 2026-MM-DD
 
 == Audience
 
-This document is for *consumers* of `Weft` — people who depend
+This document is for *consumers* of `Spline` — people who depend
 on it, call it, or include it. For developers working *on* it, see
 link:./contributing.adoc[contributing.adoc].
 
@@ -31,7 +31,7 @@ Expected output:
 
 [source]
 ----
-Weft v0.0.0
+Spline v0.0.0
 Listening on 127.0.0.1:8080
 ----
 

@@ -7,14 +7,14 @@
 # applied by the probot/settings app when changes are pushed to the default
 # branch. Install the app at: https://github.com/apps/settings
 #
-# Template file — replace weft and {{DESCRIPTION}} with actual values.
+# Template file — replace spline and {{DESCRIPTION}} with actual values.
 
 # ─── Repository Settings ───────────────────────────────────────────────────────
 
 repository:
-  name: "weft"
+  name: "spline"
   description: "{{DESCRIPTION}}"
-  homepage: "https://github.com/hyperpolymath/weft"
+  homepage: "https://github.com/hyperpolymath/spline"
   private: false
   has_issues: true
   has_projects: true

@@ -8,7 +8,7 @@ version = "0.1.0"
 last-updated = "2026-04-14"
 
 [project]
-name = "weft"
+name = "spline"
 purpose = "The serialise + parallelise data-form wire layer for Groove; aligns to Bebop (control) and WebRTC (media)."
 
 [ai-allocation]
