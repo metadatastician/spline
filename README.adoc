@@ -1,25 +1,26 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright (c) Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
 // SPDX-FileCopyrightText: 2024-2026 Jonathan D.A. Jewell (hyperpolymath)
-= Weft
+= Spline
 :toc:
 :toc-placement: preamble
 
 image:https://img.shields.io/badge/License-MPL_2.0-blue.svg[License: MPL-2.0,link="https://opensource.org/licenses/MPL-2.0"]
 
-The data-form / wire layer for Groove. *Working name — confirm before any push.*
+The data-form / wire layer for Groove.
 
 **Status: experimental (design / seed phase).** The least-settled layer of the
-cleave/groove/weft trio. Spun off as its own repo at owner direction 2026-06-16
+cleave/groove/spline trio. Spun off as its own repo at owner direction 2026-06-16
 (overriding the recommendation to defer it inside groove). Kept deliberately thin.
 
 ---
 
 == What it is
 
-`weft` is the *serialise + parallelise* data-form wire layer — the bytes that Groove
-carries. The textile metaphor pairs with the estate's `gossamer` and `groove`: the
-*weft* is the crosswise thread woven through the warp.
+`spline` is the *serialise + parallelise* data-form wire layer — the bytes that Groove
+carries. The name is joinery: a *spline* is the thin strip that seats into a groove on
+both boards to carry the join. It presupposes `groove` and is the material that passes
+through it — the typed bytes crossing the joint.
 
 It is **not a new serialiser.** It is a thin *alignment* over what consumers already
 speak:
@@ -30,13 +31,13 @@ speak:
 | Media plane | **WebRTC / RTP** — lossy, low-latency, no head-of-line block.
 |===
 
-(The 2026-06-15 gossamer audit found `burble` already speaks both — so weft *carries*
+(The 2026-06-15 gossamer audit found `burble` already speaks both — so spline *carries*
 those typed planes rather than inventing a format.)
 
 == The squisher caution (why this repo is thin)
 
 The data-form is **exactly where `protocol-squisher` originally planned to operate and
-stalled.** weft is a *fresh start*: it must NOT recreate the copy/sync seam that stalled
+stalled.** spline is a *fresh start*: it must NOT recreate the copy/sync seam that stalled
 squisher, and must NOT lift code from `protocol-squisher` / `squisher-corpus` (a frozen
 provenance archive — evidence, not a source).
 
@@ -45,16 +46,17 @@ questions, no lifted implementation. See `docs/SEED-QUESTIONS.adoc`.
 
 == Where it sits
 
-`weft` is consumed by `groove` alongside `cleave`. The *B perp C* decoupling means weft
+`spline` is consumed by `groove` alongside `cleave`. The *B perp C* decoupling means spline
 stays **posture-blind**: the cleave membrane contract (lifecycle, permeability, security)
 is independent of the wire format, and the rank/lifecycle witness MUST NOT appear in
-weft's byte encoding.
+spline's byte encoding.
 
-== Open naming/scoping question
+== Naming and scoping (resolved 2026-07-06)
 
-Whether this stays a standalone repo named `weft`, or folds back into `groove` as a
-module, is still open and cheap to change (local-only). Recorded so the decision is
-explicit rather than drifting.
+Confirmed as a standalone repo named `spline`, renamed from the working name `weft` to
+fit the estate's joinery vocabulary: `cleave` the surface, `groove` the protocol,
+`spline` the data-form that seats into the groove. Consumers (`gossamer`, `burble`, …)
+sit outside this system and keep their own names. See the estate joinery-naming ADR.
 
 == License
 

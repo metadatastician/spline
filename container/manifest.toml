@@ -1,26 +1,26 @@
 # SPDX-License-Identifier: MPL-2.0
 #
-# Cerro Torre manifest for Weft .ctp bundle
+# Cerro Torre manifest for Spline .ctp bundle
 #
 # This manifest describes the container image for verified
 # container packaging. Used by `ct pack` to create .ctp bundles.
 
 [metadata]
-name = "weft"
+name = "spline"
 version = "0.1.0"
 revision = 1
-summary = "Weft is the serialise and parallelise data-form wire layer for Groove; it aligns to Bebop for the control plane and WebRTC for the media plane."
+summary = "Spline is the serialise and parallelise data-form wire layer for Groove; it aligns to Bebop for the control plane and WebRTC for the media plane."
 description = """
-Weft — containerised service packaged as a verified
+Spline — containerised service packaged as a verified
 cerro-torre .ctp bundle with Ed25519 signing and full provenance
 tracking.
 """
 license = "MPL-2.0"
-homepage = "https://github.com/hyperpolymath/weft"
+homepage = "https://github.com/hyperpolymath/spline"
 maintainer = "Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>"
 
 [provenance]
-upstream = "https://github.com/hyperpolymath/weft"
+upstream = "https://github.com/hyperpolymath/spline"
 import_date = 2026-06-16T00:00:00Z
 
 [dependencies]
@@ -35,7 +35,7 @@ APP_HOST = "[::]"
 APP_PORT = "0"
 
 [outputs]
-primary = "weft"
+primary = "spline"
 split = []
 
 [attestations]

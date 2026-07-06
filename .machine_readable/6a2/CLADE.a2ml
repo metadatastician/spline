@@ -6,8 +6,8 @@
 uuid = "1329d84c-f651-4f58-b76e-f7f260175198"
 primary-forge = "github"
 primary-owner = "hyperpolymath"
-canonical-name = "weft"
-prefixed-name = "PROVISIONAL-weft"  # confirm clade prefix via gv-clade-index
+canonical-name = "spline"
+prefixed-name = "PROVISIONAL-spline"  # confirm clade prefix via gv-clade-index
 
 [clade]
 primary = "rm"
@@ -16,9 +16,9 @@ assigned = "2026-06-16"
 rationale = "PROVISIONAL — scaffolded from rsr-template 2026-06-16; confirm clade via gv-clade-index"
 
 [forges]
-github = "hyperpolymath/weft"
-gitlab = "hyperpolymath/weft"
-bitbucket = "hyperpolymath/weft"
+github = "hyperpolymath/spline"
+gitlab = "hyperpolymath/spline"
+bitbucket = "hyperpolymath/spline"
 
 [lineage]
 type = "standalone"

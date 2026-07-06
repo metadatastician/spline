@@ -10,7 +10,7 @@ This directory is the *minimum heavy-wiki seed* for a hyperpolymath repo.
 == How to adopt
 
 . Copy `docs-template/` → `docs/` in your repo.
-. Replace `Weft`, `hyperpolymath`, `Jonathan D.A. Jewell`, `j.d.a.jewell@open.ac.uk`,
+. Replace `Spline`, `hyperpolymath`, `Jonathan D.A. Jewell`, `j.d.a.jewell@open.ac.uk`,
   `2026` placeholders.
 . Delete any sections that genuinely do not apply (don't leave empty
   scaffolding — the 2026-05-26 doc-debt audit flagged 61 estate repos

@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: MPL-2.0
 #
-# Vordr runtime monitoring configuration for Weft
+# Vordr runtime monitoring configuration for Spline
 #
 # Vordr watches container health, detects crashes, tracks resource usage,
 # and emits structured logs. It runs alongside the application stack and
@@ -12,7 +12,7 @@
 #   vordr report
 
 [metadata]
-name = "weft"
+name = "spline"
 version = "0.1.0"
 
 # ============================================================================
@@ -79,7 +79,7 @@ format = "json"
 level = "info"
 # Write vordr logs to stdout (captured by Podman) and optionally to file.
 output = "stdout"
-# file = "/var/log/vordr/weft.log"
+# file = "/var/log/vordr/spline.log"
 
 # ============================================================================
 # Notifications (optional)
@@ -95,6 +95,6 @@ output = "stdout"
 
 # [notifications.email]
 # to = "j.d.a.jewell@open.ac.uk"
-# from = "vordr@weft.local"
+# from = "vordr@spline.local"
 # smtp = "smtp://localhost:25"
 # on = ["failure", "resource_critical"]

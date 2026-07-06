@@ -1,6 +1,6 @@
 #!/bin/sh
 # SPDX-License-Identifier: MPL-2.0
-# Weft container entrypoint
+# Spline container entrypoint
 #
 # Handles signal propagation, startup logging, and health check
 # preparation before exec-ing into the main application process.
@@ -15,7 +15,7 @@ set -e
 # when Podman sends stop signals (e.g. `podman stop`, `selur-compose down`).
 
 cleanup() {
-    echo "Received shutdown signal — stopping weft..."
+    echo "Received shutdown signal — stopping spline..."
     # If the main process is backgrounded, kill it here:
     # kill "$MAIN_PID" 2>/dev/null || true
     # wait "$MAIN_PID" 2>/dev/null || true
@@ -27,7 +27,7 @@ trap cleanup TERM INT
 # Startup logging
 # ---------------------------------------------------------------------------
 
-echo "Starting weft..."
+echo "Starting spline..."
 echo "  Host: ${APP_HOST:-[::]}"
 echo "  Port: ${APP_PORT:-0}"
 echo "  Data: ${APP_DATA_DIR:-/data}"
@@ -56,8 +56,8 @@ fi
 #
 # TODO: Replace the command below with your application binary.
 # Examples:
-#   exec /app/weft
-#   exec /app/release/bin/weft start
-#   exec /app/weft serve --host "${APP_HOST}" --port "${APP_PORT}"
+#   exec /app/spline
+#   exec /app/release/bin/spline start
+#   exec /app/spline serve --host "${APP_HOST}" --port "${APP_PORT}"
 
 exec "$@"

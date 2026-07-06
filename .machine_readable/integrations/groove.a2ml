@@ -1,7 +1,7 @@
 ; SPDX-License-Identifier: MPL-2.0
 ; Groove Protocol Manifest — declares API surfaces this project exposes.
 ;
-; weft is the data-form / wire LIBRARY. It does not bind a network port (port 0).
+; spline is the data-form / wire LIBRARY. It does not bind a network port (port 0).
 ; It is consumed in-process by groove. This manifest declares the wire-layer
 ; capabilities groove depends on.
 ;
@@ -10,7 +10,7 @@
 (groove-manifest
   (version "1.0")
 
-  (service "weft")
+  (service "spline")
   (service-version "0.1.0")
 
   ; Library — no network port.
@@ -28,10 +28,10 @@
 
   ; Capabilities — the wire-layer surface groove depends on.
   (capabilities
-    (cap (id "weft.control-plane") (name "Control plane")  (desc "Typed, binary, reliable/ordered encoding. Aligns to Bebop. NOT a new serialiser."))
-    (cap (id "weft.media-plane")   (name "Media plane")    (desc "Lossy, low-latency framing. Aligns to WebRTC/RTP, no head-of-line block."))
-    (cap (id "weft.typed-tokens")  (name "Typed boundary") (desc "Typed groove capability tokens + handles at the boundary (vs bare scalars)."))
-    (cap (id "weft.parallelise")   (name "Parallelise")    (desc "PROVISIONAL — the parallelise half of serialise+parallelise; semantics TBD (see SEED-QUESTIONS).")))
+    (cap (id "spline.control-plane") (name "Control plane")  (desc "Typed, binary, reliable/ordered encoding. Aligns to Bebop. NOT a new serialiser."))
+    (cap (id "spline.media-plane")   (name "Media plane")    (desc "Lossy, low-latency framing. Aligns to WebRTC/RTP, no head-of-line block."))
+    (cap (id "spline.typed-tokens")  (name "Typed boundary") (desc "Typed groove capability tokens + handles at the boundary (vs bare scalars)."))
+    (cap (id "spline.parallelise")   (name "Parallelise")    (desc "PROVISIONAL — the parallelise half of serialise+parallelise; semantics TBD (see SEED-QUESTIONS).")))
 
   ; Dependencies — none in-estate (aligns externally to Bebop + WebRTC).
   (dependencies ()))

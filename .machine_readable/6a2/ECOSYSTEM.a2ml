@@ -4,7 +4,7 @@
 # ECOSYSTEM.a2ml — Ecosystem position
 
 [metadata]
-project = "weft"
+project = "spline"
 ecosystem = "hyperpolymath"
 
 [position]
@@ -13,12 +13,12 @@ purpose = "The data-form / wire layer: serialise + parallelise the bytes that Gr
 
 [pipeline]
 position = "wire-layer"
-chain = "weft <- groove (consumer); aligns externally to Bebop + WebRTC"
-notes = "weft is consumed by groove alongside cleave. CAUTION: this is the least-settled layer and exactly where protocol-squisher originally planned to operate and stalled. weft is a FRESH START — do NOT copy/sync from squisher/squisher-corpus."
+chain = "spline <- groove (consumer); aligns externally to Bebop + WebRTC"
+notes = "spline is consumed by groove alongside cleave. CAUTION: this is the least-settled layer and exactly where protocol-squisher originally planned to operate and stalled. spline is a FRESH START — do NOT copy/sync from squisher/squisher-corpus."
 
 [related-projects]
 projects = [
-  { name = "groove", relationship = "consumer", notes = "groove carries weft's typed planes instead of opaque JSON. weft gives groove's C1 (logical schema) a real typed encoding." },
-  { name = "cleave", relationship = "sibling", notes = "The interface engine. B perp C: weft (the wire/C layer) stays posture-blind; the cleave membrane contract (B2) is independent of wire format. The rank/lifecycle witness MUST NOT appear in weft's byte encoding." },
-  { name = "protocol-squisher", relationship = "stalled-predecessor-CAUTION", notes = "The data-form is where squisher originally planned to operate and totally stalled (frozen provenance archive). weft must NOT recreate the copy/sync seam that stalled it. Treat squisher as evidence, not a source to lift from." },
+  { name = "groove", relationship = "consumer", notes = "groove carries spline's typed planes instead of opaque JSON. spline gives groove's C1 (logical schema) a real typed encoding." },
+  { name = "cleave", relationship = "sibling", notes = "The interface engine. B perp C: spline (the wire/C layer) stays posture-blind; the cleave membrane contract (B2) is independent of wire format. The rank/lifecycle witness MUST NOT appear in spline's byte encoding." },
+  { name = "protocol-squisher", relationship = "stalled-predecessor-CAUTION", notes = "The data-form is where squisher originally planned to operate and totally stalled (frozen provenance archive). spline must NOT recreate the copy/sync seam that stalled it. Treat squisher as evidence, not a source to lift from." },
 ]

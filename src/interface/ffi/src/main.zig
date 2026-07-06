@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright (c) Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
-// WEFT FFI Implementation
+// SPLINE FFI Implementation
 //
 // This module implements the C-compatible FFI declared in src/abi/Foreign.idr
 // All types and layouts must match the Idris2 ABI definitions.
@@ -10,7 +10,7 @@ const std = @import("std");
 
 // Version information (keep in sync with project)
 const VERSION = "0.1.0";
-const BUILD_INFO = "WEFT built with Zig " ++ @import("builtin").zig_version_string;
+const BUILD_INFO = "SPLINE built with Zig " ++ @import("builtin").zig_version_string;
 
 /// Thread-local error storage
 threadlocal var last_error: ?[]const u8 = null;
@@ -52,7 +52,7 @@ pub const Handle = opaque {
 
 /// Initialize the library
 /// Returns a handle, or null on failure
-export fn weft_init() ?*Handle {
+export fn spline_init() ?*Handle {
     const allocator = std.heap.c_allocator;
 
     const handle = allocator.create(Handle) catch {
@@ -71,7 +71,7 @@ export fn weft_init() ?*Handle {
 }
 
 /// Free the library handle
-export fn weft_free(handle: ?*Handle) void {
+export fn spline_free(handle: ?*Handle) void {
     const h = handle orelse return;
     const allocator = h.allocator;
 
@@ -87,7 +87,7 @@ export fn weft_free(handle: ?*Handle) void {
 //==============================================================================
 
 /// Process data (example operation)
-export fn weft_process(handle: ?*Handle, input: u32) Result {
+export fn spline_process(handle: ?*Handle, input: u32) Result {
     const h = handle orelse {
         setError("Null handle");
         return .null_pointer;
@@ -111,7 +111,7 @@ export fn weft_process(handle: ?*Handle, input: u32) Result {
 
 /// Get a string result (example)
 /// Caller must free the returned string
-export fn weft_get_string(handle: ?*Handle) ?[*:0]const u8 {
+export fn spline_get_string(handle: ?*Handle) ?[*:0]const u8 {
     const h = handle orelse {
         setError("Null handle");
         return null;
@@ -133,7 +133,7 @@ export fn weft_get_string(handle: ?*Handle) ?[*:0]const u8 {
 }
 
 /// Free a string allocated by the library
-export fn weft_free_string(str: ?[*:0]const u8) void {
+export fn spline_free_string(str: ?[*:0]const u8) void {
     const s = str orelse return;
     const allocator = std.heap.c_allocator;
 
@@ -146,7 +146,7 @@ export fn weft_free_string(str: ?[*:0]const u8) void {
 //==============================================================================
 
 /// Process an array of data
-export fn weft_process_array(
+export fn spline_process_array(
     handle: ?*Handle,
     buffer: ?[*]const u8,
     len: u32,
@@ -182,7 +182,7 @@ export fn weft_process_array(
 
 /// Get the last error message
 /// Returns null if no error
-export fn weft_last_error() ?[*:0]const u8 {
+export fn spline_last_error() ?[*:0]const u8 {
     const err = last_error orelse return null;
 
     // Return C string (static storage, no need to free)
@@ -196,12 +196,12 @@ export fn weft_last_error() ?[*:0]const u8 {
 //==============================================================================
 
 /// Get the library version
-export fn weft_version() [*:0]const u8 {
+export fn spline_version() [*:0]const u8 {
     return VERSION.ptr;
 }
 
 /// Get build information
-export fn weft_build_info() [*:0]const u8 {
+export fn spline_build_info() [*:0]const u8 {
     return BUILD_INFO.ptr;
 }
 
@@ -213,7 +213,7 @@ export fn weft_build_info() [*:0]const u8 {
 pub const Callback = *const fn (u64, u32) callconv(.C) u32;
 
 /// Register a callback
-export fn weft_register_callback(
+export fn spline_register_callback(
     handle: ?*Handle,
     callback: ?Callback,
 ) Result {
@@ -244,7 +244,7 @@ export fn weft_register_callback(
 //==============================================================================
 
 /// Check if handle is initialized
-export fn weft_is_initialized(handle: ?*Handle) u32 {
+export fn spline_is_initialized(handle: ?*Handle) u32 {
     const h = handle orelse return 0;
     return if (h.initialized) 1 else 0;
 }
@@ -254,22 +254,22 @@ export fn weft_is_initialized(handle: ?*Handle) u32 {
 //==============================================================================
 
 test "lifecycle" {
-    const handle = weft_init() orelse return error.InitFailed;
-    defer weft_free(handle);
+    const handle = spline_init() orelse return error.InitFailed;
+    defer spline_free(handle);
 
-    try std.testing.expect(weft_is_initialized(handle) == 1);
+    try std.testing.expect(spline_is_initialized(handle) == 1);
 }
 
 test "error handling" {
-    const result = weft_process(null, 0);
+    const result = spline_process(null, 0);
     try std.testing.expectEqual(Result.null_pointer, result);
 
-    const err = weft_last_error();
+    const err = spline_last_error();
     try std.testing.expect(err != null);
 }
 
 test "version" {
-    const ver = weft_version();
+    const ver = spline_version();
     const ver_str = std.mem.span(ver);
     try std.testing.expectEqualStrings(VERSION, ver_str);
 }

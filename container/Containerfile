@@ -1,18 +1,18 @@
 # SPDX-License-Identifier: MPL-2.0
-# Weft Container Image
+# Spline Container Image
 #
 # Multi-stage build template for Chainguard Wolfi base images.
 # Customise the builder stage for your language and copy the
 # resulting binary/release into the minimal runtime stage.
 #
 # Build with Podman:
-#   podman build -t weft:latest -f container/Containerfile .
+#   podman build -t spline:latest -f container/Containerfile .
 #
 # Run:
-#   podman run -p 0:0 weft:latest
+#   podman run -p 0:0 spline:latest
 #
 # Run with persistent volume:
-#   podman run -p 0:0 -v weft-data:/data weft:latest
+#   podman run -p 0:0 -v spline-data:/data spline:latest
 
 # ============================================================================
 # Stage 1: Builder
@@ -29,7 +29,7 @@
 #   COPY Cargo.toml Cargo.lock ./
 #   COPY src/ ./src/
 #   RUN cargo build --release
-#   # Output: /build/target/release/weft
+#   # Output: /build/target/release/spline
 #
 # --- Elixir ---
 #   RUN apk add --no-cache erl27-elixir-1.18 erlang-27 erlang-27-dev git build-base
@@ -39,14 +39,14 @@
 #   ENV MIX_ENV=prod
 #   RUN mix local.hex --force && mix local.rebar --force && \
 #       mix deps.get --only prod && mix compile && mix release
-#   # Output: /build/_build/prod/rel/weft/
+#   # Output: /build/_build/prod/rel/spline/
 #
 # --- Zig ---
 #   RUN apk add --no-cache zig build-base
 #   COPY build.zig build.zig.zon ./
 #   COPY src/ ./src/
 #   RUN zig build -Doptimize=ReleaseFast
-#   # Output: /build/zig-out/bin/weft
+#   # Output: /build/zig-out/bin/spline
 #
 FROM cgr.dev/chainguard/wolfi-base:latest AS builder
 
@@ -69,10 +69,10 @@ COPY . .
 FROM cgr.dev/chainguard/wolfi-base:latest
 
 # OCI image labels (compatible with cerro-torre .ctp bundle metadata)
-LABEL org.opencontainers.image.title="Weft" \
-      org.opencontainers.image.description="Weft is the serialise and parallelise data-form wire layer for Groove; it aligns to Bebop for the control plane and WebRTC for the media plane." \
-      org.opencontainers.image.url="https://github.com/hyperpolymath/weft" \
-      org.opencontainers.image.source="https://github.com/hyperpolymath/weft" \
+LABEL org.opencontainers.image.title="Spline" \
+      org.opencontainers.image.description="Spline is the serialise and parallelise data-form wire layer for Groove; it aligns to Bebop for the control plane and WebRTC for the media plane." \
+      org.opencontainers.image.url="https://github.com/hyperpolymath/spline" \
+      org.opencontainers.image.source="https://github.com/hyperpolymath/spline" \
       org.opencontainers.image.vendor="hyperpolymath" \
       org.opencontainers.image.licenses="MPL-2.0" \
       org.opencontainers.image.authors="Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>" \
@@ -96,9 +96,9 @@ WORKDIR /app
 
 # TODO: Copy compiled binary/release from builder stage.
 # Examples:
-#   COPY --from=builder /build/target/release/weft /app/weft
-#   COPY --from=builder /build/_build/prod/rel/weft /app/release/
-#   COPY --from=builder /build/zig-out/bin/weft /app/weft
+#   COPY --from=builder /build/target/release/spline /app/spline
+#   COPY --from=builder /build/_build/prod/rel/spline /app/release/
+#   COPY --from=builder /build/zig-out/bin/spline /app/spline
 
 # Copy entrypoint script
 COPY container/entrypoint.sh /app/entrypoint.sh

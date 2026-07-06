@@ -9,7 +9,7 @@ last-updated = "2026-06-16"
 
 [anchor]
 schema = "hyperpolymath.anchor/1"
-repo = "hyperpolymath/weft"
+repo = "hyperpolymath/spline"
 authority = "upstream-canonical"
 
 purpose = [
@@ -19,9 +19,9 @@ purpose = [
 ]
 
 [identity]
-project = "Weft"
+project = "Spline"
 kind = "library"                # language | library | service | tool
-one-sentence = "Weft is the serialise and parallelise data-form wire layer for Groove; it aligns to Bebop for the control plane and WebRTC for the media plane."
+one-sentence = "Spline is the serialise and parallelise data-form wire layer for Groove; it aligns to Bebop for the control plane and WebRTC for the media plane."
 domain = "{{PROJECT_DOMAIN}}"
 
 [semantic-authority]
