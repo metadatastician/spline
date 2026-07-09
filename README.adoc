@@ -58,6 +58,16 @@ fit the estate's joinery vocabulary: `cleave` the surface, `groove` the protocol
 `spline` the data-form that seats into the groove. Consumers (`gossamer`, `burble`, …)
 sit outside this system and keep their own names. See the estate joinery-naming ADR.
 
+== Decisions
+
+The seed questions are answered on paper in `docs/decisions/` (2026-07-09); nothing is
+wired yet.
+
+* link:docs/decisions/0002-parallelise-means-plane-multiplexing.adoc[ADR 0002] — "parallelise" = multiplexing independent typed planes of one groove session over one connection, no head-of-line blocking.
+* link:docs/decisions/0003-bebop-schema-ownership.adoc[ADR 0003] — consumers (burble) own their `.bop` schemas; spline owns only the alignment mapping, never a copied schema.
+* link:docs/decisions/0004-typed-cap-token-boundary.adoc[ADR 0004] — cap tokens = signed manifest records (groove ADR 0010); handles = wire-opaque strings, linear at each endpoint; posture never in bytes (TS-7).
+* link:docs/decisions/0005-promotion-criteria.adoc[ADR 0005] — the four-part bar for leaving seed status; no `src/` until it is met.
+
 == License
 
 Mozilla Public License, v. 2.0. See `LICENSE`.

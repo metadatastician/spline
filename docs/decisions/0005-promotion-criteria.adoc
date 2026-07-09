@@ -1,0 +1,74 @@
+// SPDX-License-Identifier: MPL-2.0
+// Copyright (c) Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
+= Architecture Decision Record: 0005-promotion-criteria
+<!-- SPDX-License-Identifier: MPL-2.0 -->
+<!-- Copyright (c) 2026 Jonathan D.A. Jewell (hyperpolymath) <j.d.a.jewell@open.ac.uk> -->
+
+# 5. Promotion criteria: when spline stops being a seed
+
+Date: 2026-07-09
+
+## Status
+
+Accepted
+
+Answers seed question 5 (`docs/SEED-QUESTIONS.adoc`).
+
+## Context
+
+spline was spun off at owner direction but kept deliberately thin, so that the
+revert cost stays low while the squisher-shaped questions were answered. ADRs
+0002–0004 answer them on paper. Paper is not promotion: "wire first — unwired
+is not done." This ADR fixes the bar, so that neither enthusiasm nor drift can
+move it later.
+
+## Decision
+
+spline leaves seed/thin status **ONLY when ALL four** of the following hold:
+
+a. **burble control-plane traffic runs over its Bebop codecs end-to-end in live
+   transport.** Not generated, not unit-tested — live. (Today JSON is on the
+   wire and the codecs are dormant; see ADR 0003.)
+b. **A second consumer (gossamer) parses the same plane.** One consumer proves
+   a private format; two prove an alignment.
+c. **The alignment mapping of ADR 0003 has a conformance test in groove CI.**
+   The mapping stops being prose and starts being checked.
+d. **The typed-token boundary of ADR 0004 is exercised by the gossamer↔burble
+   pairing demo.** Opaque string in, linear handle at each endpoint, posture
+   absent from bytes (TS-7).
+
+Until all four hold: **no `src/` in spline.** Docs, ADRs, and conformance
+fixtures only. Revert cost stays low (delete a dir, or fold the docs back into
+groove).
+
+### What "stable" would additionally need
+
+Promotion out of seed is not stability. "Stable" additionally requires:
+
+* a **versioned mapping** — the ADR 0003 alignment mapping carries a version,
+  with a recorded compatibility rule for evolving it;
+* **two independent plane implementations** — two implementations of the same
+  plane's framing that pass the same conformance fixtures, so the contract is
+  demonstrably the document, not one codebase's behaviour.
+
+## Consequences
+
+### Positive
+
+- The bar is written down and enumerable. A status doc can say "2 of 4" and be
+  checked.
+- The first milestone is concrete and small: wire burble's existing, tested
+  codecs into its live transport (criterion (a)) — work that happens in burble,
+  which is editable (ADR 0003).
+- No premature `src/` means no premature API to regret.
+
+### Negative
+
+- Criterion (b) and (d) depend on gossamer work that has its own timeline;
+  spline can be blocked by a consumer. Accepted: an alignment layer with one
+  consumer is not yet an alignment layer.
+
+### Neutral
+
+- These criteria measure promotion of *spline*; they do not gate burble or
+  gossamer releases.

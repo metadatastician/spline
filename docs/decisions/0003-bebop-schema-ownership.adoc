@@ -1,0 +1,75 @@
+// SPDX-License-Identifier: MPL-2.0
+// Copyright (c) Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
+= Architecture Decision Record: 0003-bebop-schema-ownership
+<!-- SPDX-License-Identifier: MPL-2.0 -->
+<!-- Copyright (c) 2026 Jonathan D.A. Jewell (hyperpolymath) <j.d.a.jewell@open.ac.uk> -->
+
+# 3. Bebop schema ownership: consumers own schemas, spline owns the alignment mapping
+
+Date: 2026-07-09
+
+## Status
+
+Accepted
+
+Answers seed question 3 (`docs/SEED-QUESTIONS.adoc`).
+
+## Context
+
+burble already has Bebop schemas at `server/priv/schemas/{voice_signal,room_event}.bop`
+and generated, unit-tested Elixir codecs at `server/lib/burble/protocol/`
+(via `mix bebop.generate`). The seed question asked: is the Bebop schema
+authored/owned in spline, or referenced from the consumer that already has it?
+
+The trap here is the named squisher anti-pattern: `protocol-squisher` stalled on
+exactly the design-source → copy/sync seam — a second copy of a schema that must
+then be kept in sync with the first. spline exists *because* that seam killed the
+previous attempt. Recreating it, even "just this once, just for burble", is how
+it comes back.
+
+The seed question also cautioned against editing burble at all, on the ground
+that burble was "son-shared AGPL". That was wrong: the owner ruled 2026-07-09
+that burble is MPL-2.0, owner-sole, and editable (AGPL-3.0-or-later applies to
+son-shared repos such as `idaptik`, not burble). The correction changes nothing
+about ownership — schemas stay burble-owned regardless, because ownership is
+about avoiding the copy/sync seam, not about licence.
+
+## Decision
+
+**burble's `.bop` schema files are canonical for the messages burble owns.**
+spline does not author, copy, mirror, vendor, or sync them.
+
+**spline owns only the ALIGNMENT MAPPING**: groove capability type ↔ Bebop
+message set ↔ plane (per ADR 0002). The mapping is expressed as documentation
+and conformance fixtures — never as a copied schema. A conformance fixture may
+*reference* a schema by repo + path + hash; it may not *contain* one.
+
+The same rule generalises: each consumer owns the schemas for the messages it
+owns; spline owns only the mapping that says which groove capability type those
+messages serve and on which plane they travel.
+
+## Consequences
+
+### Positive
+
+- No copy/sync seam. There is exactly one authoritative `.bop` per message set,
+  in the repo that owns the message.
+- The alignment mapping is small, reviewable, and testable (a conformance
+  fixture in groove CI — see ADR 0005 criterion (c)).
+- The stale-AGPL blocker is cleared: when wiring work needs edits inside burble,
+  those edits are permissible.
+
+### Negative
+
+- spline cannot evolve a message schema itself; it must file against the owning
+  consumer. Slower, and deliberately so.
+- Honest status: burble's codecs are **generated and unit-tested but NOT wired
+  into live transport** — JSON is on the wire today (burble `docs/PROTOCOL.md`
+  says so plainly). The mapping this ADR defines therefore currently aligns to
+  a *dormant* encoding. Wiring burble's control plane onto its own Bebop codecs
+  is spline's first promotion milestone — ADR 0005 criterion (a).
+
+### Neutral
+
+- `protocol-squisher` / `squisher-corpus` remain frozen provenance: evidence of
+  what stalled, never a source to lift from.
