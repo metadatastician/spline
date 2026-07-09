@@ -1,0 +1,82 @@
+// SPDX-License-Identifier: MPL-2.0
+// Copyright (c) Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
+= Architecture Decision Record: 0004-typed-cap-token-boundary
+<!-- SPDX-License-Identifier: MPL-2.0 -->
+<!-- Copyright (c) 2026 Jonathan D.A. Jewell (hyperpolymath) <j.d.a.jewell@open.ac.uk> -->
+
+# 4. The typed capability-token and handle boundary
+
+Date: 2026-07-09
+
+## Status
+
+Accepted
+
+Answers seed question 4 (`docs/SEED-QUESTIONS.adoc`).
+
+## Context
+
+The seed promised "a typed boundary for groove capability tokens + handles (vs
+bare scalars / opaque JSON)" and asked how that relates to cleave's open
+PROOF-NEEDS gaps: G-3 (handles are bare I64, non-linear) and G-5 (manifests
+unsigned/untyped on the wire). The risk in answering carelessly is scope creep:
+spline could try to *be* the type system or *be* the signer, and both belong
+elsewhere.
+
+## Decision
+
+Two distinct things cross the wire, and they get two distinct disciplines:
+
+**Capability tokens.** On the wire, a capability token *is* the manifest's
+capability record, made unforgeable by the manifest's Ed25519 signature —
+signature over RFC-8785-style canonical JSON, carried as a detached
+`signature` member, with public keys pinned in
+`groove/registry/groove-registry.json`. That mechanism is groove ADR 0010 and
+groove `spec/SPEC.adoc` §2.1.5 (landing in a parallel change as of this
+writing); we cite it, we do not restate it. spline adds no token format of its
+own.
+
+**Connection handles.** On the wire, a handle is a wire-opaque string. It MUST
+map, at each endpoint boundary, to a *linear* handle in that endpoint's own
+type system:
+
+* cleave kernel: the Rust `#[must_use] pub struct Handle` with drop-bomb
+  (cleave `docs/KERNEL.adoc`);
+* gossamer: a Zig `GrooveHandle` newtype;
+* the Idris2/Ephapax layer: `(1 h : Handle)`.
+
+The opaque string never carries meaning of its own; meaning is minted at the
+boundary, once, into a handle that is consumed exactly once.
+
+**B ⊥ C, restated.** The rank/posture/lifecycle witness NEVER appears in the
+byte encoding (cleave TS-7, `docs/architecture/TRANSMUTE-SECURITY.adoc`).
+spline stays posture-blind: the membrane contract is independent of the wire
+format, in both directions.
+
+## Consequences
+
+### Positive
+
+- Relation to cleave G-3/G-5 is now explicit and honest: **spline carries the
+  OPAQUE forms; the typed/linear discipline lives at the endpoints (cleave,
+  G-3); the authenticity lives at the protocol layer (groove signing, G-5).**
+  spline closes neither gap itself — and it can no longer be mistaken for the
+  place where they would be closed.
+- "Bare scalar leaks onto the wire meaning something" is now a spec violation,
+  not a style complaint.
+- TS-7 gets a second enforcement point: any spline conformance fixture that
+  finds a posture value in bytes is a hard failure.
+
+### Negative
+
+- Every endpoint must implement the boundary mapping (opaque string → linear
+  handle) before it can claim conformance. There is no "just pass the string
+  around" shortcut.
+- The token story depends on groove ADR 0010 landing; until it does, this ADR
+  cites a mechanism that is designed but not merged.
+
+### Neutral
+
+- The endpoint handle types named above are targets, not all shipped today:
+  cleave's kernel Handle is specified in `docs/KERNEL.adoc`, G-3 is still open.
+  This ADR fixes where the discipline *lives*, not its current build status.

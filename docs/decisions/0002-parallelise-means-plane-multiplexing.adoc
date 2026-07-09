@@ -1,0 +1,74 @@
+// SPDX-License-Identifier: MPL-2.0
+// Copyright (c) Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
+= Architecture Decision Record: 0002-parallelise-means-plane-multiplexing
+<!-- SPDX-License-Identifier: MPL-2.0 -->
+<!-- Copyright (c) 2026 Jonathan D.A. Jewell (hyperpolymath) <j.d.a.jewell@open.ac.uk> -->
+
+# 2. "Parallelise" means plane multiplexing
+
+Date: 2026-07-09
+
+## Status
+
+Accepted
+
+Answers seed question 2 (`docs/SEED-QUESTIONS.adoc`).
+
+## Context
+
+spline names itself the *serialise + parallelise* data-form layer, but the seed
+left "parallelise" undefined. Four readings were on the table:
+
+a. multiplexing independent streams over one connection;
+b. fan-out/scatter of one logical message to many peers;
+c. parallel (de)serialisation for throughput;
+d. something else.
+
+An undefined word in the layer's own name is exactly the kind of drift the
+squisher caution warns about. It must be pinned before any implementation.
+
+## Decision
+
+**"Parallelise" = multiplexing independent TYPED PLANES of one groove session
+side-by-side over one connection, without head-of-line blocking.**
+
+Concretely today: the control plane (Bebop — typed, binary, reliable/ordered)
+runs *in parallel with* the media plane (WebRTC/RTP — lossy, low-latency), over
+the same groove session. The definition is extensible to N typed streams; two
+planes is the current instantiation, not the ceiling.
+
+### Rejected readings, with reasons
+
+* **Fan-out / scatter of one logical message (reading b).** That is groove mesh
+  territory (groove `spec/SPEC.adoc` §6) — a *protocol* concern about who
+  receives a message, not a *data-form* concern about how bytes are shaped and
+  carried. Putting it in spline would smear the layer boundary that groove
+  ADR 0007/0009 drew.
+* **Parallel (de)serialisation for throughput (reading c).** An implementation
+  detail an encoder may or may not use. It is not observable at the layer
+  contract, so it cannot be what the layer's *name* promises. If a future codec
+  parallelises internally, fine — but that is not what spline means.
+
+## Consequences
+
+### Positive
+
+- spline's unit of design is now the **plane**: typed at C1 (the logical schema
+  gets a real typed encoding), framed at C2 (per-plane framing/multiplexing).
+  Every future design question gets asked per plane.
+- The counterexample this fixes is on record: the legacy prose ran everything as
+  opaque JSON over HTTP/1.0-per-call (`Connection: close` each message — no
+  framing, no multiplexing, head-of-line blocking by construction; see groove
+  `spec/LAYERING.adoc` §Discovery). Plane multiplexing is the direct repair.
+- "No head-of-line blocking" is now a testable property of the layer, not a
+  slogan.
+
+### Negative
+
+- Fan-out users get no help from spline; they must go to groove mesh. That is
+  the point, but it means two docs to read instead of one.
+
+### Neutral
+
+- Two planes today, N planes by definition. Adding a third typed stream (e.g. a
+  bulk-transfer plane) is an extension, not an amendment of this ADR.
