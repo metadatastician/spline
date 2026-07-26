@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright (c) Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
-= Weft — CRG Audit (2026-06-16)
+= Spline — CRG Audit (2026-06-16)
 Jonathan D.A. Jewell
 2026-06-16
 :toc:
@@ -18,7 +18,7 @@ Jonathan D.A. Jewell
 
 == Scope and Standard
 
-Evaluates the `weft` repository against
+Evaluates the `spline` repository against
 *Component Readiness Grades v2.0 (STRICT)*, 2026-03-30 revision.
 
 - Standard: `standards/component-readiness-grades/COMPONENT-READINESS-GRADES.md`
@@ -101,7 +101,7 @@ Do *not* mark PRESENT without citing the path.
 | Build-system policy (RSR R-020)
 
 | Remote
-| `git@github.com:hyperpolymath/weft.git` (origin only) / drift
+| `git@github.com:hyperpolymath/spline.git` (origin only) / drift
 | `git remote -v`
 |===
 

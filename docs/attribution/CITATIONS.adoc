@@ -1,36 +1,36 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright (c) Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
-= Weft - Citation Guide
+= Spline - Citation Guide
 :toc:
 
 == BibTeX
 
 [source,bibtex]
 ----
-@software{Weft_2026,
+@software{Spline_2026,
   author = {Jewell, Jonathan D.A.},
-  title = {Weft},
+  title = {Spline},
   year = {2026},
-  url = {https://github.com/hyperpolymath/Weft},
+  url = {https://github.com/hyperpolymath/Spline},
   license = {MPL-2.0}
 }
 ----
 
 == Harvard Style
 
-Jewell, J. (2026) _Weft_ [Computer software]. Available at: https://github.com/hyperpolymath/Weft
+Jewell, J. (2026) _Spline_ [Computer software]. Available at: https://github.com/hyperpolymath/Spline
 
 == OSCOLA
 
-Jonathan D.A. Jewell, 'Weft' (2026) <https://github.com/hyperpolymath/Weft>
+Jonathan D.A. Jewell, 'Spline' (2026) <https://github.com/hyperpolymath/Spline>
 
 == MLA
 
-Jewell, Jonathan D.A. "Weft." 2026, github.com/hyperpolymath/Weft.
+Jewell, Jonathan D.A. "Spline." 2026, github.com/hyperpolymath/Spline.
 
 == APA 7
 
-Jewell, J. (2026). _Weft_ [Computer software]. GitHub. https://github.com/hyperpolymath/Weft
+Jewell, J. (2026). _Spline_ [Computer software]. GitHub. https://github.com/hyperpolymath/Spline
 
 == See Also
 
