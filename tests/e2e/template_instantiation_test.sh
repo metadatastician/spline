@@ -119,12 +119,12 @@ find "$TEST_REPO_PATH" -type f \
     -exec bash -c '
         file="$1"
         placeholder_pairs=(
-            "weft|$TEST_REPO_NAME"
+            "spline|$TEST_REPO_NAME"
             "hyperpolymath|$TEST_OWNER"
             "github.com|$TEST_FORGE"
-            "WEFT|$TEST_PROJECT_NAME"
-            "weft|'"${TEST_REPO_NAME//-/_}"'"
-            "Weft is the serialise and parallelise data-form wire layer for Groove; it aligns to Bebop for the control plane and WebRTC for the media plane.|$TEST_DESCRIPTION"
+            "SPLINE|$TEST_PROJECT_NAME"
+            "spline|'"${TEST_REPO_NAME//-/_}"'"
+            "Spline is the serialise and parallelise data-form wire layer for Groove; it aligns to Bebop for the control plane and WebRTC for the media plane.|$TEST_DESCRIPTION"
             "{{PRIMARY_LANGUAGE}}|$TEST_PRIMARY_LANGUAGE"
             "Jonathan D.A. Jewell|$TEST_AUTHOR"
             "j.d.a.jewell@open.ac.uk|$TEST_AUTHOR_EMAIL"
