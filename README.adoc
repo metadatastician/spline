@@ -43,7 +43,7 @@ those typed planes rather than inventing a format.)
 
 The data-form is **exactly where `protocol-squisher` originally planned to operate and
 stalled.** spline is a *fresh start*: it must NOT recreate the copy/sync seam that stalled
-squisher, and must NOT lift code from `protocol-squisher` / `squisher-corpus` (a frozen
+squisher, and must NOT lift code from `protocol-squisher` / `spline` (a frozen
 provenance archive — evidence, not a source).
 
 This repo is therefore intentionally seed-only for now: scope, non-goals, and open
