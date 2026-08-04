@@ -1,0 +1,74 @@
+// SPDX-License-Identifier: MPL-2.0
+// Copyright (c) Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
+= Alignment: the VoiceSignal plane
+:revdate: 2026-08-04
+
+Spline owns the *alignment* between the joinery's data-plane peers — never a
+copied schema (ADR-0003). This document is the human half of the VoiceSignal
+alignment; the machine-readable half lives in groove's registry (SSOT
+pattern) and is CI-enforced there.
+
+== The mapping
+
+[cols="1,3"]
+|===
+| Schema (owner)
+| `metadatastician/burble` `server/priv/schemas/voice_signal.bop` — burble
+  owns the schema and the generator (`mix bebop.generate`); *burble's
+  generator output, not the Bebop spec, is what is deployed*.
+
+| Machine-readable alignment
+| `metadatastician/groove` `registry/bebop-voice-signal-alignment.json` —
+  tag→variant mapping, per-variant field layouts, wire facts, cross-plane
+  `LeaveReason` value alignment.
+
+| Conformance test (criterion (c))
+| groove CI, `spec-consistency` job → `scripts/check-bebop-alignment.mjs`:
+  every recorded frame's tag must map to its claimed variant, the declared
+  layout must consume the frame exactly, all 11 variants must be exercised.
+
+| Recorded frames
+| Produced by burble's actual codecs; vendored (with provenance headers) at
+  groove `spec/conformance/bebop/voice_signal_frames.hex` and gossamer
+  `src/interface/ffi/src/testdata/voice_signal_frames.hex` — the same bytes
+  validate both the alignment and the second consumer.
+
+| Second consumer (criterion (b))
+| gossamer `src/interface/ffi/src/bebop_voice_signal.zig` — pure-Zig strict
+  decoder for all 11 variants, interop-tested against the recorded frames
+  under `zig build test`.
+|===
+
+== Cross-plane obligations
+
+* `voice_signal.LeaveReason` MUST stay value-aligned with
+  `room_event.LeaveReason` (burble owner ruling A3, 2026-08-04): Voluntary=0,
+  Kicked=1, Banned=2, Timeout=3, ServerShutdown=4. The room-event plane
+  reports the departure the voice-signal plane initiates.
+* Decoder strictness is part of the alignment since 2026-08-04 (burble ruling
+  A4): truncated or malformed input is REJECTED by both consumers — a frame
+  declaring more bytes than it carries must never decode to defaulted values.
+
+== ADR-0005 promotion criteria — status (2026-08-04)
+
+[cols="1,1,3",options="header"]
+|===
+| Criterion | Status | Evidence
+| (a) Bebop live on burble's default transport
+| foundation shipped, flag still `:json`
+| burble#172 (plane behind flag) + #178 (strict decoders, armed drift gate) +
+  #179 (LeaveReason). The default flip is gated on (b) per the config note —
+  now satisfied; the flip is the next deliberate change.
+| (b) second consumer parses the same plane
+| SHIPPED
+| gossamer#145 — Zig decoder + recorded-frame interop tests.
+| (c) alignment conformance test in groove CI
+| SHIPPED
+| groove#30 — alignment record + `check-bebop-alignment.mjs` in `ci`.
+| (d) pairing with posture provably absent from bytes
+| OPEN
+| Needs (a) default-on plus a gossamer↔burble session capture; this is also
+  cleave's G-3/TS-7 end-to-end demonstration.
+|===
+
+Spline stays `src/`-less until the full bar is met (ADR-0005).

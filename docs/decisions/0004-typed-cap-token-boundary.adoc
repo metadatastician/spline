@@ -78,5 +78,7 @@ format, in both directions.
 ### Neutral
 
 - The endpoint handle types named above are targets, not all shipped today:
-  cleave's kernel Handle is specified in `docs/KERNEL.adoc`, G-3 is still open.
-  This ADR fixes where the discipline *lives*, not its current build status.
+  cleave's kernel Handle is specified in `docs/KERNEL.adoc`. G-3 closed on
+  machine evidence 2026-08-03 (both paths; run IDs in cleave
+  `docs/PROOF-NEEDS.adoc`). This ADR fixes where the discipline *lives*, not
+  its current build status.
