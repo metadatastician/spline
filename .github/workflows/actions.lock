@@ -14,6 +14,7 @@ workflows:
         - 'actions/checkout@v7.0.1'
         - 'actions/deploy-pages@v5.0.0'
         - 'actions/upload-pages-artifact@v5.0.0'
+    '.github/workflows/secret-scanner.yml': []
 dependencies:
     'actions/checkout@v7.0.1':
         ref: 'v7.0.1'
@@ -47,4 +48,3 @@ dependencies:
         commit: 'sha1-bb95ab5063ab9b43a948e21ed8b3fe35b1d1768b'
         owner_id: 6759885
         repo_id: 1274526902
-    '.github/workflows/secret-scanner.yml': []
