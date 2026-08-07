@@ -55,10 +55,16 @@ pattern) and is CI-enforced there.
 |===
 | Criterion | Status | Evidence
 | (a) Bebop live on burble's default transport
-| foundation shipped, flag still `:json`
+| SHIPPED
 | burble#172 (plane behind flag) + #178 (strict decoders, armed drift gate) +
-  #179 (LeaveReason). The default flip is gated on (b) per the config note —
-  now satisfied; the flip is the next deliberate change.
+  #179 (LeaveReason enum) + **#180, which flipped the default to `:bebop`**.
+  The flip's stated gate was criterion (b), satisfied by gossamer#145. JSON
+  remains the explicit opt-out and the automatic encode-failure fallback, and
+  decode of *both* planes is always accepted, so mixed-version peers keep
+  working. NOTE burble#189: the generated codec was damaged by a merge on the
+  day of the flip and main did not compile from 08-04 to 08-07 — the plane's
+  design was unaffected, but treat any "verified on main" claim between those
+  dates as unverified.
 | (b) second consumer parses the same plane
 | SHIPPED
 | gossamer#145 — Zig decoder + recorded-frame interop tests.
@@ -71,4 +77,5 @@ pattern) and is CI-enforced there.
   cleave's G-3/TS-7 end-to-end demonstration.
 |===
 
-Spline stays `src/`-less until the full bar is met (ADR-0005).
+Spline stays `src/`-less until the full bar is met (ADR-0005) — three of four
+criteria now hold; (d) is the remaining gate.
