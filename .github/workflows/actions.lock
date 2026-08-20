@@ -5,10 +5,10 @@ version: 'v0.0.2'
 workflows:
     '.github/workflows/codeql.yml':
         - 'actions/checkout@v7.0.1'
-        - 'github/codeql-action@v4.37.4'
+        - 'github/codeql-action@v4.37.7'
     '.github/workflows/oikosbot.yml':
         - 'actions/checkout@v7.0.1'
-        - 'github/codeql-action@v4.37.4'
+        - 'github/codeql-action@v4.37.7'
         - 'hyperpolymath/oikosbot@v0.1.1'
     '.github/workflows/pages.yml':
         - 'actions/checkout@v7.0.1'
@@ -17,6 +17,11 @@ workflows:
     '.github/workflows/secret-scanner.yml':
         - 'hyperpolymath/standards@bd0df9ead7faf0cdfe0e13e7966d91e28d0101d4'
 dependencies:
+    'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1':
+        ref: 'v7.0.1'
+        commit: 'sha1-3d3c42e5aac5ba805825da76410c181273ba90b1'
+        owner_id: 44036562
+        repo_id: 197814629
     'actions/checkout@v7.0.1':
         ref: 'v7.0.1'
         commit: 'sha1-3d3c42e5aac5ba805825da76410c181273ba90b1'
@@ -39,9 +44,9 @@ dependencies:
         repo_id: 496012378
         uses:
             - 'actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f'
-    'github/codeql-action@v4.37.4':
-        ref: 'v4.37.4'
-        commit: 'sha1-f205ea1c3313d32999d8d6a48b4f6530d4437b38'
+    'github/codeql-action@v4.37.7':
+        ref: 'v4.37.7'
+        commit: 'sha1-ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd'
         owner_id: 9919
         repo_id: 259445878
     'hyperpolymath/oikosbot@v0.1.1':
@@ -56,8 +61,3 @@ dependencies:
         repo_id: 1116521501
         uses:
             - 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1'
-    'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1':
-        ref: 'v7.0.1'
-        commit: 'sha1-3d3c42e5aac5ba805825da76410c181273ba90b1'
-        owner_id: 44036562
-        repo_id: 197814629
