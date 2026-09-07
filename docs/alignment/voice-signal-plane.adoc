@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 // Copyright (c) Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
 = Alignment: the VoiceSignal plane
-:revdate: 2026-08-04
+:revdate: 2026-09-07
 
 Spline owns the *alignment* between the joinery's data-plane peers — never a
 copied schema (ADR-0003). This document is the human half of the VoiceSignal
@@ -77,5 +77,34 @@ pattern) and is CI-enforced there.
   cleave's G-3/TS-7 end-to-end demonstration.
 |===
 
-Spline stays `src/`-less until the full bar is met (ADR-0005) — three of four
-criteria now hold; (d) is the remaining gate.
+The table above records the historical promotion ledger, not current beta
+acceptance. Spline stays `src/`-less until the full bar is met (ADR-0005).
+
+== Local consumer capture — 2026-09-07 (uncommitted worktrees)
+
+The scoped Gossamer/Burble adapter now exercises a real signaling capability:
+the native ReleaseSafe Gossamer library sends full VoiceSignal SDP/ICE through
+Burble's authenticated, room-and-peer-bound HTTP voice lease; a real WebSocket
+peer receives the SDP as a Bebop SdpPayload wrapper and replies through the
+ordinary signaling channel. Gossamer's production decoder parses the returned
+VoiceSignal answer and ICE frames. This is not an echo endpoint or just a codec
+fixture test. Burble's integration gate builds both native drivers and runs the
+actual HTTP/WebSocket Endpoint (`server/integration/check_gossamer_pairing.sh`).
+
+The capture repeats the same protocol fixtures under soft and hard leases and
+asserts equality of the observed signaling payloads and returned native frames.
+That is concrete data-plane evidence for (d), *not* a proof that negotiation,
+credentials, timing, channel reference fields, or whole transcripts are equal.
+No posture argument enters the payload codec. There is no proof-to-binary
+refinement or general distributed noninterference theorem in this capture.
+
+Criterion (a) also needs qualification: legacy WebSocket delivery normalizes
+SDP back to JSON. Capable clients now explicitly request `wire_format: bebop`
+at channel join and receive actual encoded SDP on the socket. A default flag
+alone never established that external wire path.
+
+Promotion remains OPEN. The host-loop maintenance hook is implemented and
+exercised by the native driver, but not integrated into the desktop shell.
+Fixtures demonstrate signaling, not negotiated media, NAT/TURN connectivity,
+audio, or external field trials. The original Cleave O-6/O-7 and refinement
+obligations are unchanged. No Spline implementation directory is introduced.
