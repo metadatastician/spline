@@ -1,47 +1,21 @@
-# Architecture
+<!-- SPDX-License-Identifier: MPL-2.0 -->
+# Spline architecture
 
-## Overview
+Spline owns the alignment between Groove session semantics and consumer-owned
+wire planes. It is not a serializer or a second copy of Burble's schema.
 
-This repository follows a modular, maintainable architecture designed for clarity, scalability, and long-term sustainability.
+- Control: reliable, ordered Bebop voice-signal messages.
+- Media: WebRTC/RTP, independent of control-plane delivery.
+- Groove owns discovery, negotiation, signed manifest records and opaque tokens.
+- Cleave owns local lifetime, rank and posture. These witnesses must not be
+  encoded into Spline's wire representation.
+- Burble owns its schema and encoder; Gossamer owns an independent decoder.
 
-## Directory Structure
+The authoritative mapping is [voice-signal-plane.adoc](docs/alignment/voice-signal-plane.adoc).
+Groove's alignment checker verifies its recorded examples against that mapping;
+a matching example is not a proof of all encoder/decoder inputs.
 
-```
-.
-├── src/           # Source code
-├── tests/        # Test suites
-├── docs/         # Documentation
-├── scripts/      # Utility scripts
-├── config/       # Configuration files
-├── LICENSE       # License file
-├── LICENSES/     # Full license texts
-└── README.adoc   # Project documentation
-```
-
-## Design Principles
-
-- **Separation of Concerns**: Each module has a single responsibility
-- **Testability**: Code is written to be easily testable
-- **Documentation**: All public APIs are documented
-- **Configuration**: Environment-specific settings are externalized
-
-## Dependencies
-
-- External dependencies are minimized and clearly declared
-- Version pinning is used for reproducibility
-
-## Security Considerations
-
-- Sensitive data is never committed to the repository
-- Secrets are managed through environment variables or secure vaults
-- Regular dependency audits are performed
-
-## Maintainability
-
-- Code follows consistent style guidelines
-- Pull requests require review and CI checks
-- Issues and discussions are tracked transparently
-
----
-
-*Last updated: 2026-07-18*
+ADR 0005 deliberately prohibits a `src/` implementation until all four promotion
+criteria have evidence. The live typed-token pairing criterion remains open.
+See [beta acceptance](docs/status/BETA-ACCEPTANCE.adoc) for the capture contract.
+No ABI, FFI, server, database or deployment architecture is claimed here.

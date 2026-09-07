@@ -1,23 +1,22 @@
 // SPDX-License-Identifier: MPL-2.0
-// Copyright (c) Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
-= YOUR Template Repo Roadmap
+= Spline roadmap
 
-== Current Status
+== Current boundary — 2026-09-05
 
-Initial development phase.
+Experimental alignment repository. Consumer implementation milestones (a) and
+(b), and Groove CI alignment (c), are recorded in
+link:../alignment/voice-signal-plane.adoc[the alignment ledger]. This is historical
+implementation evidence, not a new live-pairing result.
 
-== Milestones
+== Promotion sequence
 
-=== v0.1.0 - Foundation
-* [ ] Core functionality
-* [ ] Basic documentation
-* [ ] CI/CD pipeline
+. Capture an actual Burble–Gossamer session satisfying ADR 0005 criterion (d):
+opaque token consumption, both endpoint cleanup paths, and posture-blind bytes.
+. Reconcile the capture with the existing mapping; version any semantic change.
+. Record all four criteria and review promotion. Do not introduce `src/` first.
+. Meet the stability rule: versioned mapping and two independent implementations.
+. Obtain the CRG home-context and six diverse external-target observations,
+incorporate feedback, and record the release decision.
 
-=== v1.0.0 - Stable Release
-* [ ] Full feature set
-* [ ] Comprehensive tests
-* [ ] Production ready
-
-== Future Directions
-
-_To be determined based on community feedback._
+The acceptance contract is link:BETA-ACCEPTANCE.adoc[BETA-ACCEPTANCE].
+There is no committed beta date or invented completion percentage.

@@ -46,8 +46,10 @@ stalled.** spline is a *fresh start*: it must NOT recreate the copy/sync seam th
 squisher, and must NOT lift code from `protocol-squisher` / `spline` (a frozen
 provenance archive — evidence, not a source).
 
-This repo is therefore intentionally seed-only for now: scope, non-goals, and open
-questions, no lifted implementation. See `docs/SEED-QUESTIONS.adoc`.
+This repo remains deliberately thin: scope, decisions and a versioned alignment
+mapping, no lifted implementation. Consumer implementation and CI evidence are
+recorded in `docs/alignment/voice-signal-plane.adoc`; the live pairing gate is
+still open. See `docs/status/BETA-ACCEPTANCE.adoc`.
 
 == Where it sits
 
@@ -65,8 +67,10 @@ sit outside this system and keep their own names. See the estate joinery-naming 
 
 == Decisions
 
-The seed questions are answered on paper in `docs/decisions/` (2026-07-09); nothing is
-wired yet.
+The seed questions are answered in `docs/decisions/` (2026-07-09). Subsequent
+consumer and CI work is recorded in the alignment ledger; this is not yet a
+production-beta approval. Run `bash tests/check_alignment.sh /path/to/groove`
+to reproduce the finite alignment check and its negative controls.
 
 * link:docs/decisions/0002-parallelise-means-plane-multiplexing.adoc[ADR 0002] — "parallelise" = multiplexing independent typed planes of one groove session over one connection, no head-of-line blocking.
 * link:docs/decisions/0003-bebop-schema-ownership.adoc[ADR 0003] — consumers (burble) own their `.bop` schemas; spline owns only the alignment mapping, never a copied schema.
