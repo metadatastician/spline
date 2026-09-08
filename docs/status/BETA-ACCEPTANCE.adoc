@@ -1,0 +1,52 @@
+// SPDX-License-Identifier: MPL-2.0
+= Spline beta acceptance
+:revdate: 2026-09-06
+
+The accepted promotion authority is ADR 0005. The existing alignment ledger
+records (a) Burble's live Bebop transport, (b) Gossamer's second decoder, and
+(c) Groove's conformance check as shipped. The current local verification
+reruns (c); it does not reproduce the historical consumer results.
+
+The remaining live gate (d) requires an actual Burble–Gossamer session:
+
+. Record endpoint revisions, build commands, configuration and transport.
+. Exercise soft and hard connections through real capability operations.
+. Capture the control-plane bytes and decode them with both consumers.
+. Verify the opaque token boundary and rejection of forged/stale tokens.
+. Show each endpoint's teardown and expiry evidence, including residue.
+. Show that posture and ownership-rank witnesses are absent from the encoded
+  schema; compare equivalent payloads across dial postures. A text search of
+  one capture alone does not establish noninterference.
+. Run malformed/truncated input controls and retain both failures and passes.
+
+Before stability, version the mapping's compatibility rule and pass the same
+fixtures through two independent implementations. Before a CRG beta grade,
+retain home-context use and six diverse external trials with feedback addressed.
+Neither recorded bytes nor six local configurations substitute for those trials.
+
+== Local consumer lifecycle evidence (2026-09-06)
+
+The isolated Burble and Gossamer worktrees now pass a real HTTP lifecycle
+pairing, using Gossamer's compiled ReleaseSafe shared library through its C ABI
+and Burble's production Endpoint under test configuration. The opt-in runner
+is Burble `server/integration/check_gossamer_pairing.sh`.
+
+It verifies hard renewal, soft refusal/expiry, rejection after three missed
+hard-lease TTLs, stale/forged local handles, child-before-parent cleanup and
+zero remaining provider sessions. Gossamer cleanup after remote expiry is
+explicit in this test; automatic local expiry is not established.
+
+This is a prerequisite, not criterion (d): the current Groove lease is not
+bound to the voice-signaling authorization path, and Gossamer's native session
+connect declares no requested capability. There is no live Bebop capability
+capture or cross-posture data-plane comparison in this lifecycle test. The
+promotion gate remains OPEN.
+
+The historical criterion (a) ledger must not be read as a fresh socket capture:
+the inspected Burble `SignalingChannel` encodes Bebop for PubSub and decodes it
+back to JSON before `push` to the WebSocket client. The `:bebop` default flag
+alone therefore does not establish Bebop on that client-facing wire. A live
+pairing must name and verify the transport boundary it actually exercises.
+
+No source implementation or new serialization format is authorised by this
+document. Spline remains thin until the accepted promotion conditions hold.
