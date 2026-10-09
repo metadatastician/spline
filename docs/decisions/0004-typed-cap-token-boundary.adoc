@@ -29,8 +29,9 @@ Two distinct things cross the wire, and they get two distinct disciplines:
 
 **Capability tokens.** On the wire, a capability token *is* the manifest's
 capability record, made unforgeable by the manifest's Ed25519 signature —
-signature over the manifest's canonical JSON bytes, carried as a detached
-`signature` member, with public keys pinned in
+signature over the canonical JSON bytes of the manifest after removing the
+`signature` member; the detached signature is carried in that member, with
+public keys pinned in
 `groove/registry/groove-registry.json` where a pin exists. That mechanism is
 groove ADR 0010 (amended 2026-10-08) and groove `spec/SPEC.adoc` §2.1.5; we
 cite it, we do not restate it. The canonical JSON form is defined by
