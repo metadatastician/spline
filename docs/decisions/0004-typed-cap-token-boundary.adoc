@@ -29,12 +29,17 @@ Two distinct things cross the wire, and they get two distinct disciplines:
 
 **Capability tokens.** On the wire, a capability token *is* the manifest's
 capability record, made unforgeable by the manifest's Ed25519 signature —
-signature over RFC-8785-style canonical JSON, carried as a detached
-`signature` member, with public keys pinned in
-`groove/registry/groove-registry.json`. That mechanism is groove ADR 0010 and
-groove `spec/SPEC.adoc` §2.1.5 (landing in a parallel change as of this
-writing); we cite it, we do not restate it. spline adds no token format of its
-own.
+signature over the canonical JSON bytes of the manifest after removing the
+`signature` member; the detached signature is carried in that member, with
+public keys pinned in
+`groove/registry/groove-registry.json` where a pin exists. That mechanism is
+groove ADR 0010 (amended 2026-10-08) and groove `spec/SPEC.adoc` §2.1.5; we
+cite it, we do not restate it. The canonical JSON form is defined by
+`hyperpolymath/ijson-jcs`, the estate's one JSON specification (I-JSON,
+RFC 7493, serialised as JCS, RFC 8785). groove computes its signing bytes
+with that crate (`cli/src/canonical.rs`; groove pins it at
+`38e81e24b036e5804f074af309d385ffc3f6691c` as of 2026-10-09). spline carries
+no JSON implementation, and adds no token format of its own.
 
 **Connection handles.** On the wire, a handle is a wire-opaque string. It MUST
 map, at each endpoint boundary, to a *linear* handle in that endpoint's own
@@ -72,8 +77,10 @@ format, in both directions.
 - Every endpoint must implement the boundary mapping (opaque string → linear
   handle) before it can claim conformance. There is no "just pass the string
   around" shortcut.
-- The token story depends on groove ADR 0010 landing; until it does, this ADR
-  cites a mechanism that is designed but not merged.
+- The token story depends on groove ADR 0010. It landed 2026-07-10 (groove
+  #6) and was amended 2026-10-08 (groove #59) to take its canonical bytes from
+  ijson-jcs. A later change to groove's signing, or to ijson-jcs, changes what
+  a capability token is on the wire without an edit here.
 
 ### Neutral
 
