@@ -7,23 +7,32 @@
 # applied by the probot/settings app when changes are pushed to the default
 # branch. Install the app at: https://github.com/apps/settings
 #
-# Repository settings — configured for paint-type.
+# ─── THIS FILE MUST NEVER DECLARE REPOSITORY IDENTITY ─────────────────────────
+#
+# It carries NO `name`, `description`, `homepage` or `private` key, and it must
+# never gain one. This file was copied here from a sibling project (paint-type)
+# and still described an image editor: probot/settings re-applies `repository.name`
+# on every push to the default branch, so the copied block is a standing risk of
+# renaming this repository to another project's name.
+#
+# Identity and visibility are set OUT OF BAND — once, by the owner — with
+# `gh repo edit`. Everything below is safe to inherit because it is true of
+# every repository in the estate regardless of its name, purpose or visibility.
 
 # ─── Repository Settings ───────────────────────────────────────────────────────
 
 repository:
-  name: "paint-type"
-  description: "Cross-platform open-source image editor — capable enough for real work, simple enough to reach for without thinking"
-  homepage: "https://github.com/metadatastician/paint-type"
-  private: false
   has_issues: true
   has_projects: true
-  has_wiki: false
-  has_downloads: true
+  has_wiki: true
   default_branch: main
+  # Squash-only, matching config/settings/repo.json in metadatastician/standards
+  # (the live repository is already squash-only; this file previously asked for
+  # merge and rebase commits as well, which no longer matches either the canon
+  # or the repository).
   allow_squash_merge: true
-  allow_merge_commit: true
-  allow_rebase_merge: true
+  allow_merge_commit: false
+  allow_rebase_merge: false
   delete_branch_on_merge: true
   enable_automated_security_fixes: true
   enable_vulnerability_alerts: true
@@ -113,24 +122,37 @@ labels:
 
 # ─── Branch Protection ─────────────────────────────────────────────────────────
 
-branches:
-  - name: "main"
-    protection:
-      required_pull_request_reviews:
-        required_approving_review_count: 1
-        dismiss_stale_reviews: true
-        require_code_owner_reviews: true
-        require_last_push_approval: true
-        required_review_thread_resolution: true
-      required_status_checks:
-        strict: true
-        contexts:
-          - "Cargo check + clippy + fmt"
-          - "Cargo test"
-          - "analyze (javascript-typescript, none)"
-          - "openssf-compliance"
-      enforce_admins: true
-      required_signatures: true
-      restrictions: null
-      allow_force_pushes: false
-      allow_deletions: false
+# Default-branch protection is owned by RULESETS, not by this file, and this
+# file therefore declares no `branches:` block. Measured 2026-11-08 against the
+# live repository:
+#
+#   GET /repos/metadatastician/spline/rulesets      -> 8 rulesets, ALL active
+#   GET /repos/metadatastician/spline/rules/branches/main
+#       Branch-Floor (org, 23868655): deletion, non_fast_forward,
+#         required_linear_history, require_secret_scanning_alert_resolution
+#       EstateBranching (org, 18225024): required_signatures, pull_request
+#         (dismiss_stale_reviews_on_push, require_code_owner_review,
+#         required_review_thread_resolution), copilot_code_review
+#       Branch-Signatures (org, 24634124): required_signatures
+#       Estate Baseline (org, 18221978): repository delete/transfer/visibility
+#
+# The block that used to sit here was copied from the same sibling project
+# together with `repository.name`, and it required four contexts that spline has never
+# emitted — "Cargo check + clippy + fmt", "Cargo test" and
+# "openssf-compliance" name another project's jobs, and spline's CodeQL matrix
+# is `actions`, so its context is `analyze (actions, none)`. Applied by probot,
+# that block is a permanent merge deadlock: a required context nothing emits
+# never reports, and with `enforce_admins: true` even the owner cannot merge.
+#
+# So it provided no protection while threatening one. Nothing in it is lost:
+# every rule it declared other than the status checks is enforced by the active
+# rulesets above.
+#
+# ⚠ The one rule no ruleset currently owns is `required_status_checks`. spline
+# has no repository-level ruleset (a repo-level "gates-only" ruleset is the
+# estate's O6 shape, see standards config/rulesets/gates.json), and making a
+# check required is a policy act; it is recorded here rather than invented.
+# Once that ruleset exists, its contexts must be taken from a real run —
+# `scan / gitleaks`, `scan / rust-secrets` and `scan / shell-secrets` for the
+# secret scanner, `Workflow syntax and action locks`, `Authoritative Bebop
+# alignment`, `analyze (actions, none)` — never typed by hand.
