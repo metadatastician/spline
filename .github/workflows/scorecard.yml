@@ -20,10 +20,24 @@ permissions:
 
 jobs:
   scorecard:
-    # Re-pinned 2026-11-08. The previous ref, 8750b94ac1bb, does not exist in
-    # metadatastician/standards (the old hyperpolymath owner redirects there):
-    # every run of this workflow died at startup with zero jobs and no check
-    # run. 7641c7fdb014 is a commit on standards' main and is runtime validated
-    # in this estate -- burble runs this same revision and its scheduled
-    # Scorecard runs are green (2026-11-08).
-    uses: hyperpolymath/standards/.github/workflows/scorecard-reusable.yml@7641c7fdb01420696b5420ab85d88f599f32f609
+    # The caller job must grant everything the called job requests: a
+    # job-level `permissions:` block REPLACES the workflow-level one rather than
+    # merging with it, and a reusable workflow cannot exceed its caller's grant.
+    # Without `actions: read` Scorecard's Packaging check errors; a rejected
+    # grant fails at startup with zero jobs and no check run at all.
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+      id-token: write
+    # Re-pinned 2026-11-08. Two defects were repaired together:
+    #   1. the previous ref, 8750b94ac1bb, does not exist in
+    #      metadatastician/standards -- every run died at startup with zero jobs
+    #      and no check run;
+    #   2. the previous owner, `hyperpolymath`, is a former organisation name.
+    #      The API and git redirect it, but a reusable-workflow `uses:` does not
+    #      follow that redirect: `hyperpolymath/standards/...@7641c7fd` still
+    #      failed at startup on main (run 42521248630, zero jobs), while
+    #      `metadatastician/standards/...@7641c7fd` is green in burble's
+    #      scheduled Scorecard runs.
+    uses: metadatastician/standards/.github/workflows/scorecard-reusable.yml@7641c7fdb01420696b5420ab85d88f599f32f609

@@ -214,7 +214,7 @@ validate_scorecard() {
     "Scorecard must not receive undeclared top-level permissions" || return 1
 
   assert_equal "$standards_sha" \
-    "$(action_ref "$file" hyperpolymath/standards/.github/workflows/scorecard-reusable.yml)" \
+    "$(action_ref "$file" metadatastician/standards/.github/workflows/scorecard-reusable.yml)" \
     "Scorecard must call the reviewed immutable reusable-workflow revision" || return 1
   assert_line_count 1 '  scorecard:' "$file" "Scorecard must define one scorecard job" || return 1
   assert_line_count 0 '    secrets: inherit' "$file" \
