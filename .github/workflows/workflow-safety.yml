@@ -1,6 +1,5 @@
 # This workflow is managed by gh actions-lock.
 # SPDX-License-Identifier: MPL-2.0
-# This workflow is managed by gh actions-lock.
 name: Workflow safety
 on:
   pull_request:
@@ -41,5 +40,12 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh extension install github/gh-actions-lock --pin v0.1.6
+          # v0.1.6 supports lockfile version v0.0.2; this repository's lock is
+          # v0.0.3, which v0.1.6 refuses to read:
+          #   "lockfile version v0.0.3 is newer than this binary supports
+          #    (v0.0.2)" -> exit 2
+          # That is why this step failed on every run while the lock itself was
+          # fine. v0.2.0 reads v0.0.3; it is the revision the estate uses for
+          # this workflow and burble's identical gate is green on it.
+          gh extension install github/gh-actions-lock --pin v0.2.0
           gh actions-lock --verify-local
