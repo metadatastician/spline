@@ -20,4 +20,10 @@ permissions:
 
 jobs:
   scorecard:
-    uses: hyperpolymath/standards/.github/workflows/scorecard-reusable.yml@8750b94ac1bbe8c51ad13fe106669b13478f0b62
+    # Re-pinned 2026-11-08. The previous ref, 8750b94ac1bb, does not exist in
+    # metadatastician/standards (the old hyperpolymath owner redirects there):
+    # every run of this workflow died at startup with zero jobs and no check
+    # run. 7641c7fdb014 is a commit on standards' main and is runtime validated
+    # in this estate -- burble runs this same revision and its scheduled
+    # Scorecard runs are green (2026-11-08).
+    uses: hyperpolymath/standards/.github/workflows/scorecard-reusable.yml@7641c7fdb01420696b5420ab85d88f599f32f609

@@ -141,7 +141,7 @@ validate_dependabot() {
 validate_codeql() {
   local file=$1
   local checkout_sha=3d3c42e5aac5ba805825da76410c181273ba90b1
-  local codeql_sha=cdf488f595d80d6e07e03d4674febd5ab45fa938
+  local codeql_sha=9b3254085494b55a0f7c4c2b3d2d52cc712ce370
 
   [[ -f $file ]] || { fail "CodeQL workflow is missing"; return 1; }
   assert_equal "$checkout_sha" "$(action_ref "$file" actions/checkout)" \
@@ -179,7 +179,7 @@ validate_codeql() {
 
 validate_scorecard() {
   local file=$1
-  local standards_sha=8750b94ac1bbe8c51ad13fe106669b13478f0b62
+  local standards_sha=7641c7fdb01420696b5420ab85d88f599f32f609
   local permission_count
 
   [[ -f $file ]] || { fail "Scorecard workflow is missing"; return 1; }
@@ -273,7 +273,7 @@ expect_rejected "persisted checkout credentials" \
   validate_codeql "$fixture_root/.github/workflows/codeql.yml"
 cp "$repo_root/.github/workflows/codeql.yml" "$fixture_root/.github/workflows/codeql.yml"
 
-sed -i 's/@8750b94ac1bbe8c51ad13fe106669b13478f0b62/@main/' \
+sed -i 's/@7641c7fdb01420696b5420ab85d88f599f32f609/@main/' \
   "$fixture_root/.github/workflows/scorecard.yml"
 expect_rejected "a mutable Scorecard reusable-workflow ref" \
   validate_scorecard "$fixture_root/.github/workflows/scorecard.yml"
